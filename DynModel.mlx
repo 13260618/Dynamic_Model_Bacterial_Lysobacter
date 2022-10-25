@@ -1,0 +1,115 @@
+
+function Demo_SIR
+close all;
+clear;
+clc; 
+
+Tspan  = [0 15];                   % tiempo de simulacion
+y0     = [9; 6; 3; 2; 1; 2;10; 0; 0; 0;3; 3];      % valores iniciales (12 valores)  
+[t, y] = ode45(@(t,y) SIR(t,y,0.00125), Tspan, y0);
+
+plot(t, y(:, [1]) , 'linewidth', 1.5)
+grid on
+
+xlabel('Tiempo (semanas)')
+ylabel('Población de bacterias')
+legend
+legend({'$S_{y}$', '$E_{y}$','$K$',%'$S_{m}$','E_{m}', '$L$', '$R_{m}$','P_{rm}',  '$R_{y}$','$P_{ry}$','P','B'}, 'Interpreter', 'latex', 'location', 'best') 
+title('Respuestas del modelo SEIRP')
+end
+
+function dydt = SIR(t, y,g)
+%     dydt = zeros(12,1);
+    %%%%%% Valores estimados proporcionados por el autor del
+    %%%%%% Artículo.
+    r = 0.125;
+    Phi_y = 0.001;
+    Phi_m = 0.001;
+    theta_y = 0.06;
+    %theta_m = 0.06;
+    omega_y = 0.7;    
+    %omega_m = 0.87;
+    
+    alpha_y = 0.00006;
+    
+    alpha_m = 0.002;
+    
+    phi_y = 0.5;
+    phi_m = 0.82;
+    iota_y = 0.02;
+    iota_m = 0.3;
+    chi = 0.002;
+    chi_y = 0.067;
+    gamma = 0.067;
+    rho = 0.00002;
+    beta = 0.992;
+    Psi = 0.992;
+    lambda = 0.48;
+    eta = 0.02;
+    delta = 0.004;
+    mu_y = 0.9;
+    mu_m = 0.003;
+    mu_p = 0.00018;
+    omega_bar = 2387014640356.4;
+    q = 2387014640356.4;
+    g = 0.0125;
+    n = 0.125;
+ 
+    %%%%%%%% Definimos variables de internas para
+    %%%%%%%% el modelo.
+    Sy = y(1);
+     Sm = y(2);
+    Ey = y(2);
+    Em = y(4);
+    K = y(3);
+    L = y(6);
+    Ry = y(4);
+    Rm = y(8);
+    Pry = y(5);
+    Prm = y(10);
+    P = y(6);
+    B = y(7);
+
+   %%% cambios de diferentes tasas
+    Delta_y = (theta_y*K+phi_y*P);
+   
+    %Delta_m = (theta_m*L+phi_m*P);
+
+    C = 2;
+    N = 21;%(r*C)/(r+delta);
+
+
+    %%%%%%%% Ecuaciones diferenciales del modelo anidadas entre sí.
+   % dydt(1)
+
+    dSy = r*(C-N)-Delta_y*Sy-gamma*Sy-delta*Sy-iota_y*Sy*B;
+    dSm = gamma*Sy+phi_y*Ry+phi_m*Rm-Delta_m*Sm-delta*Sm+chi*Prm-iota_m*Sm*B;
+    dEy = Delta_y*Sy-alpha_y*Ey*B-omega_y*Ey-delta*Ey;
+    dEm = Delta_m*Sm-alpha_m*Em*B-omega_m*Em-delta*Em;
+    dK = omega_y*Ey - (delta+mu_y)*K;
+    dL = omega_m*Em + rho*L*B - (delta+mu_m)*L;
+    dRy = alpha_y*Ey*B - phi_y*Ry - delta*Ry;
+    dRm = alpha_m*Em*B + rho*L*B - phi_m*Rm - delta*Rm;
+    dPry = iota_y*Sy*B + chi_y*Pry - delta*Pry;
+    dPrm = iota_m*Sm*B + chi_y*Pry - chi*Prm - delta*Prm;
+    dP = g*P + beta*(P)*(1-(P/q))-(lambda+mu_p*B)*P;
+    dB = n*B + Psi*B*(1-(B/omega_bar))-(eta*B);
+       
+%     dydt(1) = r*(C-N)-Delta_y*Sy-gamma*Sy-delta*Sy-iota_y*Sy*B;
+%     dydt(2)  = gamma*Sy+phi_y*Ry+phi_m*Rm-Delta_m*Sm-delta*Sm+chi*Prm-iota_m*Sm*B;
+%     dydt(3)  = Delta_y*Sy-alpha_y*Ey*B-omega_y*Ey-delta*Ey;
+%     dydt(4)  = Delta_m*Sm-alpha_m*Em*B-omega_m*Em-delta*Em;
+%     dydt(5)  = omega_y*Ey - (delta+mu_y)*K;
+%     dydt(6)  = omega_m*Em + rho*L*B - (delta+mu_m)*L;
+%     dydt(7)  = alpha_y*Ey*B - phi_y*Ry - delta*Ry;
+%     dydt(8)  = alpha_m*Em*B + rho*L*B - phi_m*Rm - delta*Rm;
+%     dydt(9)  = iota_y*Sy*B + chi_y*Pry - delta*Pry;
+%     dydt(10) = iota_m*Sm*B + chi_y*Pry - chi*Prm - delta*Prm;
+%     dydt(11) = g*P + beta*P*(1-(P/q))-(lambda+mu_p*B)*P;
+%     dydt(12) = n*B + Psi*B*(1-(B/omega_bar))-(eta*B);
+         
+
+
+    dydt = [dSy;dEy; dK ;dRy; dPry; dP;dB];
+end
+
