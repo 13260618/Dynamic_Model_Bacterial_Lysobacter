@@ -1,0 +1,20 @@
+Pathogens Funtion
+The differential equation of the Pathogens model is given in (1) and (2):
+        (1)
+                    (2)
+
+g =0.000125;%0; % Transmission Rate  % beta
+T =30;
+P0 = 100;
+B0 = 58;
+Valores iniciales y resolveremos usando la función ode45, para más información ver en:  ode45.
+y0 = [P0;B0];                % Initial conditions
+tspan = [0 15];                        % Interval of Integration
+[t,y] = ode45(@(t,y) BvsP(t,y,g),tspan,y0);
+
+Gráficos que simulan el modelo.
+plot(t,y,'-');
+xlabel('weeks'); 
+ylabel('Bacteria population (10 millions)');
+legend('P','B');
+title('Plot 1');
