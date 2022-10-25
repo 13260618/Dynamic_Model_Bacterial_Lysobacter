@@ -1,3 +1,3 @@
 # Dynamic_Model-_of_Bacterial
 
-For the code, first run **function** _SIR_model_
+For the code, first run the **function** _SIR_model_
