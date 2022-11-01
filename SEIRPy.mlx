@@ -1,0 +1,63 @@
+ 
+function SEIRPy
+close all;
+clear;
+clc; 
+
+Tspan  = [0 15];                    % tiempo de simulacion
+y0     = [9; 6; 3; 2; 1; 2;1];      % valores iniciales (12 valores)  
+[t, y] = ode45(@(t,y) SIR(t,y,0.00125), Tspan, y0);
+
+plot(t, y(:, [1 2]) , 'linewidth', 1.5)
+grid on
+
+xlabel('Tiempo (semanas)')
+ylabel('Población de bacterias')
+%legend({'$S_{y}$', '$E_{y}$','$K$',  '$R_{y}$','$P_{ry}$','P','B'}, 'Interpreter', 'latex', 'location', 'best') %'$S_{m}$','E_{m}', '$L$', '$R_{m}$','P_{rm}',
+title('Respuestas del modelo SEIRP')
+end
+
+function dydt = SIR(t, y,g)
+%     dydt = zeros(12,1);
+    %%%%%% Valores estimados proporcionados por el autor del
+    %%%%%% Artículo.
+    r = 0.125;
+    theta_y = 0.06;
+    omega_y = 0.7;    
+    alpha_y = 0.00006;
+    phi_y = 0.5;
+    iota_y = 0.02;
+    chi_y = 0.067;
+    gamma = 0.067;
+    beta = 0.992;
+    Psi = 0.992;
+    lambda = 0.48;
+    eta = 0.02;
+    delta = 0.004;
+    mu_y = 0.9;
+    mu_p = 0.00018;
+    omega_bar = 2387014640356.4;
+    q = 2387014640356.4;
+    n = 0.125;
+    Sy = y(1);
+    Ey = y(2);
+    K = y(3);
+    Ry = y(4);
+    Pry = y(5);
+    P = y(6);
+    B = y(7);
+
+    Delta_y = (theta_y*K+phi_y*P);
+    C = 2;
+    N = (r*C)/(r+delta);
+%EDOs
+    dSy = r*(C-N)-Delta_y*Sy-gamma*Sy-delta*Sy-iota_y*Sy*B;
+    dEy = Delta_y*Sy-alpha_y*Ey*B-omega_y*Ey-delta*Ey;
+    dK = omega_y*Ey - (delta+mu_y)*K;
+    dRy = alpha_y*Ey*B - phi_y*Ry - delta*Ry;
+    dPry = iota_y*Sy*B + chi_y*Pry - delta*Pry;
+    dP = g*P + beta*(P)*(1-(P/q))-(lambda+mu_p*B)*P;
+    dB = n*B + Psi*B*(1-(B/omega_bar))-(eta*B);
+    dydt = [dSy;dEy; dK ;dRy; dPry; dP;dB];
+end
+
