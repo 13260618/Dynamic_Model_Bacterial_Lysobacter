@@ -5,5 +5,5 @@ function dydt = sir_model(t,y,beta,gamma,N)
   dS = (-beta*S*I/N) ;
   dI = (beta*S*(I/N) - gamma*I);
   dR = (gamma*I);
-  dydt = [dS;dI;dR];
+  dSIRdt = [dS;dI;dR];
 end
