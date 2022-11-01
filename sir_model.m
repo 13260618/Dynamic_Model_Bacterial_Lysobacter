@@ -1,4 +1,4 @@
-function dydt = sir_model(t,y,beta,gamma,N)
+function dSIRdt = sir_model(t,y,beta,gamma,N)
   S = y(1);
   I = y(2);
   
