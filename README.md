@@ -1,6 +1,6 @@
 # Dynamic Model of Bacterial
 
-For the code, first save the **functions** (namefunction.m)
+For the code, first save the **functions** (_namefunction.m_)
  
 
 Welcome to the Dynamic_Model-_of_Bacterial!
