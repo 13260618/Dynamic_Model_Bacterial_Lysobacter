@@ -29,11 +29,11 @@ S, I, R = ret.T
 # Gráficos de S(t), I(t) y R(t)
 fig = plt.figure()#facecolor='w'
 ax = fig.add_subplot(111, axisbelow=True)#facecolor='#dddddd',
-ax.plot(t, S/1000,  alpha=0.5, lw=1.5, label='Susceptibles') # 'black',linestyle = 'dashed',
-ax.plot(t, I/1000,  alpha=0.5, lw=1.5, label='Infectados')
-ax.plot(t, R/1000,  alpha=0.5, lw=1.5, label='Recuperados con inmunidad')
+ax.plot(t, S,  alpha=0.5, lw=1.5, label='Susceptibles') # 'black',linestyle = 'dashed',
+ax.plot(t, I,  alpha=0.5, lw=1.5, label='Infectados')
+ax.plot(t, R,  alpha=0.5, lw=1.5, label='Recuperados con inmunidad')
 ax.set_xlabel('Días')
-ax.set_ylabel('Población (1000s)')
+ax.set_ylabel('Población')
 plt.title("Predicciones del modelo SIR con Python")
 legend = ax.legend()
 plt.show()
