@@ -24,8 +24,8 @@ ret = odeint(deriv, y0, t, args=(N, beta, gamma,lambd))  #integración con el m�
 S,E, I, R = ret.T
 
 # Gráficos de S(t), I(t) y R(t)
-fig = plt.figure()#facecolor='w'
-ax = fig.add_subplot(111, axisbelow=True)#facecolor='#dddddd',
+fig = plt.figure()
+ax = fig.add_subplot(111, axisbelow=True)
 ax.plot(t, S/1000,  alpha=0.5, lw=1.5, label='S')
 ax.plot(t, E/1000,  alpha=0.5, lw=1.5, label='E')
 ax.plot(t, I/1000,  alpha=0.5, lw=1.5, label='I')
