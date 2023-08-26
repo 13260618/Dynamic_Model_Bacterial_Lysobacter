@@ -11,9 +11,8 @@ For the code, first save the **functions** (_namefunction.m_)
 
 This repository will host some epidemiological models focused on the plant salinity domain and of course on the well known and present SARS-COV-2.
 
-
-
-![image](https://github.com/13260618/Dynamic_Model-_of_Bacterial/assets/111941844/27f52602-f1c3-4d4a-8bf1-caea350e5e7b)
+See: SEIRPmodel-Israel-Fall2022.pdf for more information. 
+![image](https://github.com/13260618/Dynamic_Model-_of_Bacterial/assets/111941844/99b7c611-372c-4fbd-8df5-043598c75294)
 
 
 I'm Israel Monjaraz, student Statistcs in University Chapingo. (bachelor's degree)
