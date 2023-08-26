@@ -14,5 +14,3 @@ This repository will host some epidemiological models focused on the plant salin
 See: SEIRPmodel-Israel-Fall2022.pdf for more information. 
 ![image](https://github.com/13260618/Dynamic_Model-_of_Bacterial/assets/111941844/99b7c611-372c-4fbd-8df5-043598c75294)
 
-
-I'm Israel Monjaraz, student Statistcs in University Chapingo. (bachelor's degree)
